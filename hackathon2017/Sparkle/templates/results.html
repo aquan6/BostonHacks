@@ -1,67 +1,10 @@
 <!DOCTYPE html>
 <html>
-<style>
-.box {
-background-color: rgba(255, 255, 255, 0.5);
-border: 1px solid brown;
-margin: 10px;
-padding: 10px;
-}
-.superWrapper{
-position:absolute;
-background-image: url("https://i.imgur.com/e3DVZFs.jpg");
-background-repeat: no-repeat;
-background-size: cover;
-border: 1px solid blue;
-margin: 20 px;
-height: 100%;
-width: 100%;
-margin:0px auto;
 
-}
-.headerPics{
-max-width: 1900px;
-margin:0px auto;
-border: 1px dotted black;
-}
-.right{
-float:right;
-}
-.submitButton{
-margin: 20px;
-}
-.peekaboo{
-width: 100%;
-max-width: 400px;
-height: auto;
-float: auto 0;
-
-}
-.credits{
-height: 85px;
-width: 100%;
-background-color: black;
-
-position: absolute;
-bottom: 0;
-
-}
-
-.credits p{
-color: white;
-float: left;
-}
-
-body {
-height: 100%;
-}
-.superWrapper {
-border: 1px dotted black;
-}
-
-</style>
 
 <head>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/style.css') }}">
+
 <title>Sparkle</title>
 </head>
 
@@ -71,22 +14,39 @@ border: 1px dotted black;
 	</div>
 <div class="superWrapper">
 <div class="wrapper">
-<body>
-	<h1 style="color:blue;"><center>Sparkle</center></h1>
+<body onpageshow="getLocation()">
+<h1 style="color:blue; text-align: center;"><a href="{{ url_for('index') }}">Sparkle</a></h1>
 	<h2>Welcome to our Fall 2017 Hackathon Page!</h2>
 	<div class="box">
 		<p>Ever wondered how safe it is where you're at? Look no further!</p>
-		<p>Results:
-                    The quiet score is {{quiet_score}}  </br>
-                    The safety score is {{ safety_score }} </br>
-                    <iframe src={{ link }} width="480" height="320" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-        </p>
+        <p id="demo"></p>
+        <p>Results:</p>
+        <p>The quiet score is {{quiet_score}} </p>
+        <p>The safety score is {{ safety_score }} </p>
+            <iframe src={{ link }} width="480" height="320" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 
+  </iframe>
 	</div>
 	<center><img class = "peekaboo"src="https://i.imgur.com/IgCl4kJ.gifv" alt="gif here"></center>
 	<div class="credits">
 	<p class>Authors: Tony Kim, Dennis Wu, Janelle Chen, Nuan Huang, and Andrew Quan </p>
 	</div>
+<script>
+var x = document.getElementById("demo");
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function showPosition(position) {
+    document.getElementById("demo").innerHTML = "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude;
+}
+</script>
+
+
 </body>
 
 </div>
