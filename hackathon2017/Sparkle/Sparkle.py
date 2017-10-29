@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import requests
 import json
 import urllib.request as ur
 import random as random
-import flask_googlemaps inport GoogleMaps
 
 app = Flask(__name__)
 
@@ -28,6 +27,10 @@ def user_input():
     link = get_next_giphy(quiet_score, safety_score)
 
     return render_template('results.html', quiet_score=str(quiet_score), safety_score=str(safety_score), link=link)
+
+@app.route('/index')
+def index():
+    return render_template('homePage.html')
 
 @app.route('/action_page.php')
 def calculate():
