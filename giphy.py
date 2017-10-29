@@ -20,7 +20,7 @@ def get_next_giphy(x, y):
         search_term = "not+bad"
         
     else:
-        search_term = "good"
+        search_term = "awesome"
         
     data = json.loads(ur.urlopen("http://api.giphy.com/v1/gifs/search?q=" + search_term + "&api_key=" + API_KEY + "&limit="+limit + "&offset=" + offset).read())
     
