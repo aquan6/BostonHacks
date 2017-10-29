@@ -49,16 +49,14 @@ float: auto 0;
 	<h2>Welcome to our Fall 2017 Hackathon Page!</h2>
 	<div class="box">
 		<p>Ever wondered how safe it is where you're at? Look no further!</p>
-		<form action ="/echo" method="POST">
-            Street number: <input type = "text" name="streetnum">
-			Street name: <input type = "text" name="streetname"></br>
-            City: <input type = "text" name="city">
-            State: <input type = "text" name="state"></br>
-			<input class = "submitButton" type="submit" value = "submit">
+        <br>Results: </br>
+            The quiet score is {{quiet_score}}  </br>
+            The safety score is {{ safety_score }} </br>
+        </p>
 		</form>
 	</div>
 	<center><img class = "peekaboo"src="200w_d.gif" alt="gif here"></center>
-	
+
 </body>
 	<p class ="credits">Authors: Tony Kim, Dennis Wu, Janelle Chen, Nuan Huang, and Andrew Quan </p>
 </div>
