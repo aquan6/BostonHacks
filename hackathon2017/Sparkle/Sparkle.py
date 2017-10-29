@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import requests
-import json, urllib
+import json
+import urllib.request as ur
+import random as random
 
 app = Flask(__name__)
 
@@ -19,15 +21,41 @@ def user_input():
     response = requests.get("https://apis.solarialabs.com/shine/v1/total-home-scores/reports", params=p)
     responseObj = json.loads(response._content)
 
-    quiet_score = str(responseObj['totalHomeScores']['quiet']['value'])
-    safety_score = str(responseObj['totalHomeScores']['safety']['value'])
+    quiet_score = responseObj['totalHomeScores']['quiet']['value']
+    safety_score = responseObj['totalHomeScores']['safety']['value']
 
-    return render_template('results.html', quiet_score=quiet_score, safety_score=safety_score)
+    link = get_next_giphy(quiet_score, safety_score)
+
+    return render_template('results.html', quiet_score=str(quiet_score), safety_score=str(safety_score), link=link)
 
 @app.route('/action_page.php')
 def calculate():
     return "hi"
 
+
+def get_next_giphy(x, y):
+    good_threshold = 40
+    bad_threshold = 20
+
+    API_KEY = "bv9xw5KEmBxkF8FglWO2dd9iAU0ze9Wr"
+    limit = "1"
+    offset = str(random.randrange(25))
+    avg = (x + y) / 2
+
+    if avg <= bad_threshold:
+        search_term = "bad"
+
+    elif avg > bad_threshold and avg < good_threshold:
+        search_term = "not+bad"
+
+    else:
+        search_term = "good"
+
+    data = json.loads(ur.urlopen(
+        "http://api.giphy.com/v1/gifs/search?q=" + search_term + "&api_key=" + API_KEY + "&limit=" + limit + "&offset=" + offset).read())
+
+    print(data['data'][0]['embed_url'])
+    return data['data'][0]['embed_url']
 
 if __name__ == '__main__':
     app.run()
